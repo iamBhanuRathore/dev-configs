@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Editors
+*.swp
+*.swo
+
+# npm / yarn
+node_modules/
+yarn-debug.log*
+.pnpm-store/
+
+# misc
+.vscode/
+.idea/
+.env
+.local/
