@@ -45,8 +45,12 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-frappe",
+      -- Match Antigravity: workbench.colorTheme "GitHub Dark Dimmed"
+      colorscheme = "github_dark_dimmed",
     },
   },
+  -- VS Code Material-style file icons (Antigravity uses material-icon-theme).
+  -- mini.icons stays as fallback; devicons takes precedence when present.
+  { "nvim-tree/nvim-web-devicons", lazy = true },
 }
 
