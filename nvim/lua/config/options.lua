@@ -4,6 +4,20 @@
 
 vim.opt.termguicolors = true
 
+-- Match Antigravity: editor.tabSize 2, prettier.printWidth 200
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+
+-- Antigravity uses vscode.typescript-language-features for [typescript],
+-- NOT eslint fix-on-save. Disable eslint as a formatter so it can't
+-- reflow code differently from vtsls/prettier.
+vim.g.lazyvim_eslint_auto_format = false
+-- Run prettier even when the project has no prettier config
+-- (formatting.lua supplies the printWidth-200 fallback in that case).
+vim.g.lazyvim_prettier_needs_config = false
+
 -- VS Code-like Soft Wrapping
 vim.opt.wrap = true -- Enable soft wrapping
 vim.opt.linebreak = true -- Wrap at words, not characters

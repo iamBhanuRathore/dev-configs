@@ -37,6 +37,9 @@ return {
       servers = {
         -- Anchor/Solana uses Cargo.toml and TOML heavily
         taplo = {},
+        -- Explicitly disable rust_analyzer in lspconfig 
+        -- to prevent conflicts with rustaceanvim
+        rust_analyzer = { enabled = false },
       },
       inlay_hints = { enabled = false },
     },
@@ -101,16 +104,12 @@ return {
   -----------------------------------------------------------------------------
   {
     "mason-org/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "shfmt",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
         "prettierd", -- Faster formatter for Next.js
-        "eslint_d", -- Faster linter
-        "codelldb", -- Debugger for Rust
         "rustfmt",
-      },
-    },
+      })
+    end,
   },
 
   -----------------------------------------------------------------------------

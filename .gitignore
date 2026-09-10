@@ -15,3 +15,5 @@ yarn-debug.log*
 .idea/
 .env
 .local/
+# tool cache
+nvim/.gemini-clipboard/

@@ -23,7 +23,7 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
     -- 2. Load LazyVim extras
-    { import = "lazyvim.plugins.extras.linting.eslint" },
+    -- (linting.eslint lives in lua/plugins/example.lua with the other extras)
     { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- TIP: For your Rust work, you might want to add:

@@ -5,12 +5,18 @@ return {
     version = "*",
     opts = {
       size = 20,
-      open_mapping = [[<c-\>]], -- Ctrl+\ to toggle terminal
+      open_mapping = [[<c-/>]], -- Ctrl+/ to toggle terminal (changed from Ctrl+\ to avoid conflict)
       direction = "float",
       float_opts = {
         border = "curved",
       },
     },
+  },
+
+  -- Disable Noice to restore standard cmdline behavior
+  {
+    "folke/noice.nvim",
+    enabled = false,
   },
 
   -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments
@@ -45,8 +51,8 @@ return {
   -- Mason: Ensure common tools are installed automatically
   {
     "mason-org/mason.nvim",
-    opts = {
-      ensure_installed = {
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
         "stylua", -- Lua formatter
         "prettier", -- Web formatter
         "eslint_d", -- JS linter
@@ -59,8 +65,9 @@ return {
         -- Rust specific tools
         "rust-analyzer", -- Rust LSP
         "codelldb", -- Debugger for Rust and C/C++
-      },
-    },
+        "taplo", -- TOML LSP
+      })
+    end,
   },
 
   -- Seamless navigation between Tmux panes and Vim splits
@@ -92,8 +99,8 @@ return {
       easing = "exponential",
       scroll_down_mouse = { 'v:count == 0 ? "<c-d>" : "<c-d>"' },
       scroll_up_mouse = { 'v:count == 0 ? "<c-u>" : "<c-u>"' },
-      scroll_down = { "gj", "<c-d>", "<c-f>" },
-      scroll_up = { "gk", "<c-u>", "<c-b>" },
+      scroll_down = { "<c-d>", "<c-f>" },
+      scroll_up = { "<c-u>", "<c-b>" },
       -- Other options for custom keybindings can be added here
       -- For example, to bind `s` for smoother down, `w` for smoother up:
       -- scroll_down = { "<c-d>", "s" },
