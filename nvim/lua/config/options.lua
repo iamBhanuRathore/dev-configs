@@ -28,6 +28,8 @@ vim.opt.wrap = true -- Enable soft wrapping
 vim.opt.linebreak = true -- Wrap at words, not characters
 vim.opt.breakindent = true -- Wrapped lines maintain visual indentation
 vim.opt.breakindentopt = "shift:2" -- Optional: Indent wrapped lines slightly more for clarity
+vim.opt.showbreak = "↪ " -- Marker at the start of wrapped continuation lines
+vim.opt.smoothscroll = true -- Scroll by screen lines, not whole logical lines
 
 -- Wrap diagnostic messages in float and virtual text
 vim.diagnostic.config({

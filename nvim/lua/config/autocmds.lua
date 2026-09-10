@@ -4,3 +4,21 @@
 -- with `vim.api.nvim_create_autocmd`
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- Force soft wrap in every non-floating window so long lines always render
+-- as multiple visual lines instead of one horizontally-scrollable line.
+-- (LazyVim defaults to nowrap and plugins/filetypes can set nowrap locally;
+-- this runs last on window enter and wins.)
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  group = vim.api.nvim_create_augroup("user_force_wrap", { clear = true }),
+  callback = function()
+    local win = vim.api.nvim_get_current_win()
+    -- Skip floating windows (completion menus, hovers, telescope, etc.)
+    if vim.api.nvim_win_get_config(win).relative ~= "" then
+      return
+    end
+    vim.wo[win].wrap = true
+    vim.wo[win].linebreak = true
+    vim.wo[win].breakindent = true
+  end,
+})
