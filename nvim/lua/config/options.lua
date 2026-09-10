@@ -10,6 +10,11 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 
+-- Hide the empty command-line row (cmdheight 0). Default is 1, which leaves
+-- a permanent blank line between lualine and the tmux status bar. With 0 the
+-- cmdline only pops up when actually used (:, /, ?). Needs restart to apply.
+vim.opt.cmdheight = 0
+
 -- Antigravity uses vscode.typescript-language-features for [typescript],
 -- NOT eslint fix-on-save. Disable eslint as a formatter so it can't
 -- reflow code differently from vtsls/prettier.
