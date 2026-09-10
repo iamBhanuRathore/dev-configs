@@ -1,6 +1,6 @@
 # Font configuration (match Antigravity defaults: Menlo, 13pt, normal weight)
 font-family = "Menlo"
-font-size = 15
+font-size = 14
 font-thicken = false
 
 
