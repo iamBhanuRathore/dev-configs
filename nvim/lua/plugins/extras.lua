@@ -13,11 +13,8 @@ return {
     },
   },
 
-  -- Disable Noice to restore standard cmdline behavior
-  {
-    "folke/noice.nvim",
-    enabled = false,
-  },
+  -- Noice enabled (LazyVim stock): routes cmdline/messages to popups so
+  -- cmdheight=0 works with no gap and no "Press ENTER" confirmations.
 
   -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments
   {
