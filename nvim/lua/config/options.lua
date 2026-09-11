@@ -10,6 +10,12 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 
+-- Show raw markdown markup (`**`, backticks, …) on every line.
+-- LazyVim defaults conceallevel to 2, which hides the markers on idle lines
+-- but reveals them on the cursor line (concealcursor is empty) — that's the
+-- width "shift" when moving between lines. 0 disables conceal entirely.
+vim.opt.conceallevel = 0
+
 -- Hide the empty command-line row (cmdheight 0). Default is 1, which leaves
 -- a permanent blank line between lualine and the tmux status bar. With 0 the
 -- cmdline only pops up when actually used (:, /, ?). Needs restart to apply.
