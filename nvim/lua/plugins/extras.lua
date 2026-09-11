@@ -58,6 +58,7 @@ return {
         "eslint_d", -- JS linter
         "shellcheck", -- Shell linter
         "shfmt", -- Shell formatter
+        "dotenv-linter", -- .env linter (UnorderedKey excluded in linting.lua)
         "json-lsp", -- JSON Language Server
         "html-lsp", -- HTML Language Server
         "css-lsp", -- CSS Language Server

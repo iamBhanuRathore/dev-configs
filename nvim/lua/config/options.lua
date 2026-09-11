@@ -4,6 +4,19 @@
 
 vim.opt.termguicolors = true
 
+-- Detect .env* files as dotenv (nvim has no built-in detection for them).
+-- Kept as its own filetype (not sh) so shfmt/shellcheck never touch them.
+-- NOTE: no ^/$ anchors here — vim.filetype.add wraps patterns as ^...$
+-- itself, and a trailing $ of ours would become a literal "$" and match
+-- nothing.
+vim.filetype.add({
+  filename = { [".env"] = "dotenv" },
+  pattern = {
+    [".*%.env%.[%w_%.%-]+"] = "dotenv",
+    [".*%.env"] = "dotenv",
+  },
+})
+
 -- Match Antigravity: editor.tabSize 2, prettier.printWidth 200
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
