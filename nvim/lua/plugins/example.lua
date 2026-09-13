@@ -15,6 +15,12 @@ return {
   { import = "lazyvim.plugins.extras.linting.eslint" },
 
   -----------------------------------------------------------------------------
+  -- 1b. DEBUG & TEST (DAP + neotest; adapters in lua/plugins/dap.lua etc.)
+  -----------------------------------------------------------------------------
+  { import = "lazyvim.plugins.extras.dap.core" }, -- <leader>d... debugging
+  { import = "lazyvim.plugins.extras.test.core" }, -- <leader>t... tests
+
+  -----------------------------------------------------------------------------
   -- 2. THEME & UI
   -----------------------------------------------------------------------------
   {

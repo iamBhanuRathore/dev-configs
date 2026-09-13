@@ -55,6 +55,9 @@ return {
     -- Without this, delimiters link through an undefined group and blend
     -- into the foreground. Hexes are official Primer dimmed values.
     "projekt0n/github-nvim-theme",
+    -- Module is `github-theme`, not `github-nvim-theme`: without this,
+    -- lazy.nvim can't auto-wire `opts` into setup() and errors out.
+    main = "github-theme",
     opts = {
       groups = {
         all = {

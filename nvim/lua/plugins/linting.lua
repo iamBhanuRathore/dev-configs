@@ -9,6 +9,8 @@ return {
       -- ['_'] = { 'fallback linter' },
       -- ["json"] = { "jsonlint" },
       dotenv = { "dotenv_linter" }, -- .env errors as diagnostics
+      sh = { "shellcheck" }, -- dev.sh and friends (binary via mason)
+      bash = { "shellcheck" },
     },
     linters = {
       dotenv_linter = {

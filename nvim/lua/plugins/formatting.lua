@@ -27,6 +27,8 @@ return {
     opts.formatters_by_ft["jsonc"] = { "prettier" }
     opts.formatters_by_ft["lua"] = { "stylua" }
     opts.formatters_by_ft["rust"] = { "rustfmt" }
+    opts.formatters_by_ft["sh"] = { "shfmt" }
+    opts.formatters_by_ft["bash"] = { "shfmt" }
 
     opts.formatters = opts.formatters or {}
 
@@ -94,6 +96,11 @@ return {
 
     opts.formatters["rustfmt"] = vim.tbl_deep_extend("force", opts.formatters["rustfmt"] or {}, {
       prepend_args = { "--edition", "2021" },
+    })
+
+    -- shfmt defaults to tabs; this repo uses 2 spaces (see scripts/dev.sh).
+    opts.formatters["shfmt"] = vim.tbl_deep_extend("force", opts.formatters["shfmt"] or {}, {
+      prepend_args = { "-i", "2" },
     })
   end,
 }
