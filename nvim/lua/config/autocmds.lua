@@ -126,6 +126,17 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 apply_winbar_band()
 
+-- Safe autosave (Option 1, Antigravity-like without save-on-every-keystroke):
+-- save when leaving insert mode, switching buffers, or focusing another app.
+vim.api.nvim_create_autocmd({ "InsertLeave", "BufLeave", "FocusLost" }, {
+  group = vim.api.nvim_create_augroup("user_autosave", { clear = true }),
+  callback = function()
+    if vim.bo.modifiable and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+      vim.cmd("silent! update")
+    end
+  end,
+})
+
 -- Remember a manual (mouse/cursor-drag) resize of the Neo-tree sidebar so the
 -- same width is restored on toggle/restart (see lua/plugins/neo-tree.lua).
 -- winfixwidth above keeps splits from squashing the tree, so a width change

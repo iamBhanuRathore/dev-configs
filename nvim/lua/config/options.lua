@@ -2,6 +2,11 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+-- Safe autosave (Option 1): write on :next, :prev, :tag, :make, etc.
+-- The actual InsertLeave / BufLeave / FocusLost hook lives in autocmds.lua.
+vim.opt.autowrite = true
+vim.opt.autowriteall = true
+
 vim.opt.termguicolors = true
 
 -- Detect .env* files as dotenv (nvim has no built-in detection for them).
@@ -50,14 +55,20 @@ vim.opt.breakindentopt = "shift:2" -- Optional: Indent wrapped lines slightly mo
 vim.opt.showbreak = "↪ " -- Marker at the start of wrapped continuation lines
 vim.opt.smoothscroll = true -- Scroll by screen lines, not whole logical lines
 
--- Wrap diagnostic messages in float and virtual text
+-- Diagnostic display: virtual text is single-line and gets clipped at the
+-- window edge, which cuts off long messages (e.g. tailwindcss cssConflict).
+-- Render the full message as wrapped virtual lines under the cursor line
+-- instead (global wrap=true applies), and always show the diagnostic source
+-- in floats so severity + producer (e.g. tailwindcss) are explicit.
 vim.diagnostic.config({
+  virtual_lines = {
+    current_line = true,
+  },
   float = {
-    wrap = true,
+    source = true,
+    severity_sort = true,
   },
-  virtual_text = {
-    wrap = true,
-  },
+  severity_sort = true,
 })
 
 -- Ensure spaces are not displayed as hyphens when 'list' is enabled
