@@ -59,7 +59,7 @@ return {
         "json-lsp", -- JSON Language Server
         "html-lsp", -- HTML Language Server
         "css-lsp", -- CSS Language Server
-        "typescript-language-server", -- TS/JS Language Server
+        "vtsls", -- TS/JS Language Server (LazyVim typescript extra uses vtsls)
         -- Rust specific tools
         "rust-analyzer", -- Rust LSP
         "codelldb", -- Debugger for Rust and C/C++
