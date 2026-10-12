@@ -76,3 +76,17 @@ vim.opt.list = true
 vim.opt.listchars = "tab:» ,space: ,trail: ,nbsp:%,extends:»,precedes:«"
 vim.g.lazyvim_rust_diagnostics = "rust-analyzer"
 
+-- Polished font rendering to match reference screenshot (JetBrains Mono).
+-- Terminal Neovim (Ghostty/tmux) gets its font from the terminal, but GUI
+-- clients (Neovide, nvim-qt, Firenvim) use 'guifont' — keep them in sync.
+-- linespace adds 2px breathing room between lines like VS Code/Antigravity.
+vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h13.5"
+vim.opt.linespace = 2
+if vim.g.neovide then
+  vim.g.neovide_scale_factor = 1.0
+  vim.g.neovide_padding_top = 4
+  vim.g.neovide_padding_bottom = 4
+  vim.g.neovide_padding_left = 8
+  vim.g.neovide_padding_right = 8
+end
+

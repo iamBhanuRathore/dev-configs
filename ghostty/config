@@ -1,7 +1,14 @@
-# Font configuration (match Antigravity defaults: Menlo, 13pt, normal weight)
-font-family = "Menlo"
-font-size = 14
+# Font configuration (JetBrains Mono Nerd Font — polished, easy on eyes, matches reference screenshot)
+# Family name must match Ghostty discovery: "JetBrainsMono Nerd Font Mono"
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 13.5
 font-thicken = false
+font-feature = "+liga"
+font-feature = "+calt"
+# Breathing room between lines — JetBrains Mono has a tall x-height, this keeps it airy like VS Code/Antigravity
+adjust-cell-height = 8%
+bold-is-bright = true
+minimum-contrast = 1.1
 
 
 # Window Appearance
