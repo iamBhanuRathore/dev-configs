@@ -55,6 +55,14 @@ vim.opt.breakindentopt = "shift:2" -- Optional: Indent wrapped lines slightly mo
 vim.opt.showbreak = "↪ " -- Marker at the start of wrapped continuation lines
 vim.opt.smoothscroll = true -- Scroll by screen lines, not whole logical lines
 
+-- Cursor line: highlight the NUMBER column only, not the whole row.
+-- Full-row cursorline forces a full-line redraw on every scroll frame,
+-- which is the single biggest terminal scroll cost. Number-only keeps
+-- position visible (VS Code-like current-line cue via lualine + words)
+-- at a fraction of the redraw work. Revert to "both" if you miss it.
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
+
 -- Antigravity-feel scrolling/mouse, all zero-cost built-in options:
 -- VS Code-like 2-line wheel (Ghostty/tmux wheel was jumping half-pages
 -- via neoscroll's <C-d>/<C-u> mapping), cursor margin so scroll starts

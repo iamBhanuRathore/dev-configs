@@ -60,8 +60,12 @@ return {
       scroll = {
         enabled = true,
         animate = {
-          duration = { step = 12, total = 120 },
-          easing = "outExpo",
+          -- Silkier than default: 10ms frames (~100fps timer) over 150ms.
+          -- Slightly longer glide reads as "smooth" like VS Code; short
+          -- enough to never feel floaty. Rapid wheel spam still skips the
+          -- animation (snacks anti-spam), so fast flicks stay instant.
+          duration = { step = 10, total = 150 },
+          easing = "outQuart",
         },
       },
       -- Zero-cost DX: bigfile disables heavy features (indent, scroll
