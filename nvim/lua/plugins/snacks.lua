@@ -18,6 +18,29 @@ return {
         end,
         desc = "Find Files",
       },
+      -- Genuine gaps (LazyVim core covers <space>, `,` and `/`; these match
+      -- VS Code muscle memory and don't clash with existing maps).
+      {
+        "<leader>fg",
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = "Grep Workspace",
+      },
+      {
+        "<leader>fb",
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = "Find Buffers",
+      },
+      {
+        "<leader>fr",
+        function()
+          Snacks.picker.recent()
+        end,
+        desc = "Recent Files",
+      },
     },
     opts = {
       picker = {
