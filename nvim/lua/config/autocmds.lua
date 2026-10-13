@@ -19,8 +19,12 @@ vim.opt.spell = false
 vim.api.nvim_create_autocmd("BufWinEnter", {
   group = vim.api.nvim_create_augroup("user_force_wrap", { clear = true }),
   callback = function()
-    -- Neo-tree manages its own window options (nowrap + pinned left, see below).
-    if vim.bo.filetype == "neo-tree" then
+    -- Neo-tree, plugin sidebars and special buffers manage their own wrap.
+    local ft = vim.bo.filetype
+    if ft == "neo-tree" or ft == "qf" or ft == "help" or ft == "lazy" or ft == "mason" or ft == "trouble" then
+      return
+    end
+    if ft:match("^dap") or ft:match("toggleterm") or ft == "lazyterm" or ft == "notify" then
       return
     end
     local win = vim.api.nvim_get_current_win()
@@ -65,7 +69,9 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
 -- immediately sidescroll again to keep it visible, which is what made the
 -- pinning "not stick". Acting only when leftcol ~= 0 keeps this a no-op
 -- most of the time.
-vim.api.nvim_create_autocmd({ "CursorMoved", "WinScrolled", "WinEnter", "BufEnter" }, {
+-- NOTE: no CursorMoved here on purpose — that event fires per keystroke and
+-- made every typed character scan windows + save/restore the view.
+vim.api.nvim_create_autocmd({ "WinScrolled", "WinEnter", "BufEnter" }, {
   group = vim.api.nvim_create_augroup("user_neotree_pin_left", { clear = true }),
   callback = function(ev)
     local neotree_width = require("config.neo-tree-width")
@@ -140,10 +146,19 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufLeave", "FocusLost" }, {
 -- Remember a manual (mouse/cursor-drag) resize of the Neo-tree sidebar so the
 -- same width is restored on toggle/restart (see lua/plugins/neo-tree.lua).
 -- winfixwidth above keeps splits from squashing the tree, so a width change
--- here almost always means a deliberate drag.
+-- here almost always means a deliberate drag. Debounced: WinResized can fire
+-- in bursts while dragging, and each call does disk IO.
+local _neotree_save_at = 0
 vim.api.nvim_create_autocmd({ "WinResized", "VimLeavePre" }, {
   group = vim.api.nvim_create_augroup("user_neotree_remember_width", { clear = true }),
-  callback = function()
+  callback = function(ev)
+    if ev.event == "WinResized" then
+      local now = vim.uv.hrtime()
+      if now - _neotree_save_at < 500 * 1000000 then
+        return
+      end
+      _neotree_save_at = now
+    end
     local neotree_width = require("config.neo-tree-width")
     local _, w = neotree_width.current()
     if w then

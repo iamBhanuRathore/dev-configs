@@ -17,16 +17,13 @@ return {
   -- cmdheight=0 works with no gap and no "Press ENTER" confirmations.
 
   -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments.
-  -- Skipped for big files (snacks.bigfile sets vim.b.bigfile) so giant
-  -- SQL/generated buffers don't pay a full-buffer scan on open.
+  -- LazyFile (not BufReadPost) so it loads after UI; giant-buffer cost is
+  -- capped separately by synmaxcol + snacks.bigfile (see options/snacks).
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
     event = "LazyFile",
-    cond = function(buf)
-      return not vim.b[buf or vim.api.nvim_get_current_buf()].bigfile
-    end,
   },
 
   -- Symbols Outline: A sidebar to see code structure (classes, functions)

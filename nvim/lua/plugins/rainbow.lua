@@ -2,10 +2,7 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim",
     event = "LazyFile",
-    -- Skip big files (same guard as todo-comments): rainbow matching walks
-    -- the whole treesitter tree, which stings on giant SQL/generated files.
-    cond = function(buf)
-      return not vim.b[buf or vim.api.nvim_get_current_buf()].bigfile
-    end,
+    -- NOTE: no per-buffer cond here (lazy.nvim cond gets a plugin spec, not
+    -- a buffer). Giant-buffer cost is capped by synmaxcol + snacks.bigfile.
   },
 }

@@ -12,6 +12,14 @@ return {
   opts = function(_, opts)
     opts.formatters_by_ft = opts.formatters_by_ft or {}
 
+    -- Format-on-save budget: 1000ms then skip (no half-written saves).
+    -- lsp_fallback only fires when NO conform formatter ran, so prettierd
+    -- + fallback can never double-format the same save.
+    opts.format = vim.tbl_deep_extend("force", opts.format or {}, {
+      timeout_ms = 1000,
+      lsp_fallback = true,
+    })
+
     -- Plain `.ts` files: use vtsls (LSP) only, like Antigravity.
     -- Empty list = no conform formatter -> LazyVim falls back to LSP.
     -- This MUST run after lazyvim.plugins.extras.formatting.prettier
@@ -19,12 +27,14 @@ return {
     -- overwrites the prettier entry that extra inserts for typescript.
     opts.formatters_by_ft["typescript"] = {}
 
-    -- Other web filetypes: prettier, like Antigravity's prettier-vscode.
-    opts.formatters_by_ft["javascript"] = { "prettier" }
-    opts.formatters_by_ft["javascriptreact"] = { "prettier" }
-    opts.formatters_by_ft["typescriptreact"] = { "prettier" }
-    opts.formatters_by_ft["json"] = { "prettier" }
-    opts.formatters_by_ft["jsonc"] = { "prettier" }
+    -- Other web filetypes: prettierd (daemon, faster than prettier).
+    -- NOTE: prettierd caches config; after editing .prettierrc run
+    -- `:!prettierd stop` or formatting looks stale.
+    opts.formatters_by_ft["javascript"] = { "prettierd" }
+    opts.formatters_by_ft["javascriptreact"] = { "prettierd" }
+    opts.formatters_by_ft["typescriptreact"] = { "prettierd" }
+    opts.formatters_by_ft["json"] = { "prettierd" }
+    opts.formatters_by_ft["jsonc"] = { "prettierd" }
     opts.formatters_by_ft["lua"] = { "stylua" }
     opts.formatters_by_ft["rust"] = { "rustfmt" }
     opts.formatters_by_ft["sh"] = { "shfmt" }
@@ -36,11 +46,8 @@ return {
     -- If the project HAS its own prettier config, respect it (like VS Code
     -- does: .prettierrc wins over editor settings). Otherwise apply the
     -- Antigravity globals so we don't fall back to prettier's 80-col default.
-    opts.formatters["prettier"] = vim.tbl_deep_extend(
-      "force",
-      opts.formatters["prettier"] or {},
-      {
-        prepend_args = function(_, ctx)
+    -- Shared by prettier + prettierd (same CLI flags).
+    local prettier_fallback_args = function(_, ctx)
           local config_files = {
             ".prettierrc",
             ".prettierrc.json",
@@ -90,9 +97,12 @@ return {
             "--end-of-line",
             "auto",
           }
-        end,
-      }
-    )
+        end
+    for _, name in ipairs({ "prettier", "prettierd" }) do
+      opts.formatters[name] = vim.tbl_deep_extend("force", opts.formatters[name] or {}, {
+        prepend_args = prettier_fallback_args,
+      })
+    end
 
     opts.formatters["rustfmt"] = vim.tbl_deep_extend("force", opts.formatters["rustfmt"] or {}, {
       prepend_args = { "--edition", "2021" },

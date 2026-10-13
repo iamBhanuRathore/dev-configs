@@ -103,6 +103,13 @@ return {
         "solidity", -- Useful if you bridge to EVM
         "sql",
       })
+      -- No vim-regex fallback highlighting (keeps all 8 parsers, halves
+      -- highlight work on wide SQL lines; synmaxcol caps the rest).
+      opts.highlight = vim.tbl_deep_extend("force", opts.highlight or {}, {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      })
+      opts.indent = vim.tbl_deep_extend("force", opts.indent or {}, { enable = true })
     end,
   },
 

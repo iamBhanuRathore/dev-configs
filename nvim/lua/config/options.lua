@@ -65,6 +65,14 @@ vim.opt.mousescroll = "ver:2,hor:4"
 vim.opt.splitkeep = "screen"
 vim.opt.ttyfast = true
 
+-- Long-line safety for wide SQL / generated buffers (keeps VS Code wrap,
+-- just caps per-line syntax cost): no highlight past column 300.
+vim.opt.synmaxcol = 300
+-- 300ms CursorHold delays illuminate/lint slightly vs 200, but avoids
+-- swap-write/CursorHold flicker the review flagged. Still snappy.
+vim.opt.updatetime = 300
+vim.opt.redrawtime = 1500
+
 -- Diagnostic display: virtual_lines reflows the buffer under the cursor on
 -- every move (layout shift + flicker while typing). virtual_text is a cheap
 -- single-line render with no reflow — smoother and faster. Full message is
