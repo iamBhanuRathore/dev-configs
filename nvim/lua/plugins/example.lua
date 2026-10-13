@@ -47,6 +47,17 @@ return {
         -- Explicitly disable rust_analyzer in lspconfig 
         -- to prevent conflicts with rustaceanvim
         rust_analyzer = { enabled = false },
+        -- eslint: flat config + monorepo-aware working directories so it
+        -- lints the nearest package instead of walking the whole monorepo.
+        eslint = {
+          settings = {
+            useFlatConfig = true,
+            workingDirectories = { mode = "auto" },
+          },
+        },
+        -- NOTE: tailwindcss left at extra defaults on purpose. It only
+        -- attaches where tailwind/postcss config exists (apps/web), so
+        -- backend pays registration cost only, not a live server.
       },
       inlay_hints = { enabled = false },
     },
@@ -69,9 +80,12 @@ return {
                 enable = true,
               },
             },
-            -- Add clippy lints for Anchor
+            -- Check on save uses plain `cargo check` (fast diagnostics).
+            -- Clippy stays MANUAL via <leader>rc: clippy on Anchor proc
+            -- macros is slow enough to stutter saves. rust-analyzer check
+            -- already surfaces most issues; run clippy on demand.
             checkOnSave = {
-              command = "clippy",
+              command = "check",
             },
             procMacro = {
               enable = true,
