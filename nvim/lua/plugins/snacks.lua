@@ -30,6 +30,17 @@ return {
           sort_empty = true,
         },
       },
+      -- Antigravity-like smooth scrolling without a new plugin.
+      -- snacks.scroll is cheaper than neoscroll.nvim: pure redraw timing,
+      -- no cursor hiding, auto-disabled on big files. Duration kept short
+      -- so it feels snappy, not floaty.
+      scroll = {
+        enabled = true,
+        animate = {
+          duration = { step = 12, total = 120 },
+          easing = "outExpo",
+        },
+      },
     },
   },
 }

@@ -55,15 +55,26 @@ vim.opt.breakindentopt = "shift:2" -- Optional: Indent wrapped lines slightly mo
 vim.opt.showbreak = "↪ " -- Marker at the start of wrapped continuation lines
 vim.opt.smoothscroll = true -- Scroll by screen lines, not whole logical lines
 
--- Diagnostic display: virtual text is single-line and gets clipped at the
--- window edge, which cuts off long messages (e.g. tailwindcss cssConflict).
--- Render the full message as wrapped virtual lines under the cursor line
--- instead (global wrap=true applies), and always show the diagnostic source
--- in floats so severity + producer (e.g. tailwindcss) are explicit.
+-- Antigravity-feel scrolling/mouse, all zero-cost built-in options:
+-- VS Code-like 2-line wheel (Ghostty/tmux wheel was jumping half-pages
+-- via neoscroll's <C-d>/<C-u> mapping), cursor margin so scroll starts
+-- early, no layout jump when splitting, fast tty.
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.mousescroll = "ver:2,hor:4"
+vim.opt.splitkeep = "screen"
+vim.opt.ttyfast = true
+
+-- Diagnostic display: virtual_lines reflows the buffer under the cursor on
+-- every move (layout shift + flicker while typing). virtual_text is a cheap
+-- single-line render with no reflow — smoother and faster. Full message is
+-- still available in the float (source + severity shown explicitly).
 vim.diagnostic.config({
-  virtual_lines = {
-    current_line = true,
+  virtual_text = {
+    spacing = 4,
+    prefix = "●",
   },
+  virtual_lines = false,
   float = {
     source = true,
     severity_sort = true,
