@@ -16,14 +16,17 @@ return {
   -- Noice enabled (LazyVim stock): routes cmdline/messages to popups so
   -- cmdheight=0 works with no gap and no "Press ENTER" confirmations.
 
-  -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments
+  -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments.
+  -- Skipped for big files (snacks.bigfile sets vim.b.bigfile) so giant
+  -- SQL/generated buffers don't pay a full-buffer scan on open.
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      -- configuration options
-    },
-    event = "BufReadPost",
+    opts = {},
+    event = "LazyFile",
+    cond = function(buf)
+      return not vim.b[buf or vim.api.nvim_get_current_buf()].bigfile
+    end,
   },
 
   -- Symbols Outline: A sidebar to see code structure (classes, functions)

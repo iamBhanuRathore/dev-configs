@@ -26,7 +26,8 @@ return {
   {
     "projekt0n/github-nvim-theme",
   },
-  { "ellisonleao/gruvbox.nvim" },
+  -- NOTE: gruvbox.nvim removed (unused; github_dark_dimmed is the theme).
+  -- catppuccin stays only as lazy-loaded fallback via theme.lua integrations.
   {
     "LazyVim/LazyVim",
     opts = {

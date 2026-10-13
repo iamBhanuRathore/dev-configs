@@ -41,6 +41,12 @@ return {
           easing = "outExpo",
         },
       },
+      -- Zero-cost DX: bigfile disables heavy features (indent, scroll
+      -- animation, lint) in giant buffers; quickfile renders macros fast;
+      -- words adds VS Code-like ]]/[[ reference jumps.
+      bigfile = { enabled = true },
+      quickfile = { enabled = true },
+      words = { enabled = true },
     },
   },
 }
