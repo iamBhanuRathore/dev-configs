@@ -4,7 +4,10 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
-      transparent_background = true,
+      -- Opaque on purpose: transparent_background=true washes colors out
+      -- over Ghostty's blur/opacity and costs a compositor blur every frame.
+      -- Antigravity is opaque, so this is both higher-contrast and faster.
+      transparent_background = false,
       integrations = {
         aerial = true,
         alpha = true,

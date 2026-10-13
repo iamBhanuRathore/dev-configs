@@ -36,15 +36,15 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
-  install = { colorscheme = { "tokyonight" } },
+  install = { colorscheme = { "github_dark_dimmed" } },
   checker = {
-    enabled = true,
-    notify = false,
+    enabled = false,
   },
   performance = {
     rtp = {
       disabled_plugins = {
         "gzip",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",

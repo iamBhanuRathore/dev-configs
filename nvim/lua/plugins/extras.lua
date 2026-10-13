@@ -16,14 +16,14 @@ return {
   -- Noice enabled (LazyVim stock): routes cmdline/messages to popups so
   -- cmdheight=0 works with no gap and no "Press ENTER" confirmations.
 
-  -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments
+  -- Todo Comments: Highlight TODO, FIXME, BUG, etc. in comments.
+  -- LazyFile (not BufReadPost) so it loads after UI; giant-buffer cost is
+  -- capped separately by synmaxcol + snacks.bigfile (see options/snacks).
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      -- configuration options
-    },
-    event = "BufReadPost",
+    opts = {},
+    event = "LazyFile",
   },
 
   -- Symbols Outline: A sidebar to see code structure (classes, functions)
@@ -87,26 +87,9 @@ return {
     },
   },
 
-  -- Neoscroll: Smooth scrolling
-  {
-    "karb94/neoscroll.nvim",
-    event = "WinScrolled", -- Only load when scrolling occurs
-    opts = {
-      hide_cursor = true,
-      stop_scroll = true,
-      easing = "exponential",
-      scroll_down_mouse = { 'v:count == 0 ? "<c-d>" : "<c-d>"' },
-      scroll_up_mouse = { 'v:count == 0 ? "<c-u>" : "<c-u>"' },
-      scroll_down = { "<c-d>", "<c-f>" },
-      scroll_up = { "<c-u>", "<c-b>" },
-      -- Other options for custom keybindings can be added here
-      -- For example, to bind `s` for smoother down, `w` for smoother up:
-      -- scroll_down = { "<c-d>", "s" },
-      -- scroll_up = { "<c-u>", "w" },
-    },
-    config = function(_, opts)
-      require("neoscroll").setup(opts)
-    end,
-  },
+  -- Smooth scrolling is handled by snacks.scroll (see snacks.lua).
+  -- neoscroll.nvim was removed: it mapped the mouse wheel to <C-d>/<C-u>
+  -- (half-page jumps with hide_cursor), fought built-in smoothscroll, and
+  -- loaded lazily on WinScrolled which made the first scroll jank.
 }
 

@@ -40,9 +40,12 @@ return {
             },
             -- The actual crash fix: raise the heap limit (MB) and run a
             -- single tsserver instead of semantic + syntax pair.
+            -- 6144 (not 8192) + separate syntax server: typing stays live
+            -- while the monorepo loads. WATCH: if :LspLog shows tsserver
+            -- restarts/OOM in the big monorepo, raise back toward 8192.
             tsserver = {
-              maxTsServerMemory = 8192,
-              useSeparateSyntaxServer = false,
+              maxTsServerMemory = 6144,
+              useSeparateSyntaxServer = true,
             },
             -- Large workspace: don't scan every package.json for auto-imports.
             -- Relative imports + explicit paths still complete fine.

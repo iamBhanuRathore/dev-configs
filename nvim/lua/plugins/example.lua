@@ -26,7 +26,8 @@ return {
   {
     "projekt0n/github-nvim-theme",
   },
-  { "ellisonleao/gruvbox.nvim" },
+  -- NOTE: gruvbox.nvim removed (unused; github_dark_dimmed is the theme).
+  -- catppuccin stays only as lazy-loaded fallback via theme.lua integrations.
   {
     "LazyVim/LazyVim",
     opts = {
@@ -46,6 +47,17 @@ return {
         -- Explicitly disable rust_analyzer in lspconfig 
         -- to prevent conflicts with rustaceanvim
         rust_analyzer = { enabled = false },
+        -- eslint: flat config + monorepo-aware working directories so it
+        -- lints the nearest package instead of walking the whole monorepo.
+        eslint = {
+          settings = {
+            useFlatConfig = true,
+            workingDirectories = { mode = "auto" },
+          },
+        },
+        -- NOTE: tailwindcss left at extra defaults on purpose. It only
+        -- attaches where tailwind/postcss config exists (apps/web), so
+        -- backend pays registration cost only, not a live server.
       },
       inlay_hints = { enabled = false },
     },
@@ -68,9 +80,12 @@ return {
                 enable = true,
               },
             },
-            -- Add clippy lints for Anchor
+            -- Check on save uses plain `cargo check` (fast diagnostics).
+            -- Clippy stays MANUAL via <leader>rc: clippy on Anchor proc
+            -- macros is slow enough to stutter saves. rust-analyzer check
+            -- already surfaces most issues; run clippy on demand.
             checkOnSave = {
-              command = "clippy",
+              command = "check",
             },
             procMacro = {
               enable = true,
@@ -102,6 +117,13 @@ return {
         "solidity", -- Useful if you bridge to EVM
         "sql",
       })
+      -- No vim-regex fallback highlighting (keeps all 8 parsers, halves
+      -- highlight work on wide SQL lines; synmaxcol caps the rest).
+      opts.highlight = vim.tbl_deep_extend("force", opts.highlight or {}, {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      })
+      opts.indent = vim.tbl_deep_extend("force", opts.indent or {}, { enable = true })
     end,
   },
 
