@@ -77,6 +77,11 @@ vim.api.nvim_create_autocmd({ "WinScrolled", "WinEnter", "BufEnter" }, {
     local neotree_width = require("config.neo-tree-width")
     local win
     if ev.event == "WinScrolled" then
+      -- Fast path: with a single window there is no tree to pin, and this
+      -- event fires every frame of a smooth-scroll animation.
+      if #vim.api.nvim_tabpage_list_wins(0) < 2 then
+        return
+      end
       -- A scroll can target a non-focused window (e.g. mouse wheel over
       -- the tree while typing elsewhere), so scan for the tree window.
       win = neotree_width.current()

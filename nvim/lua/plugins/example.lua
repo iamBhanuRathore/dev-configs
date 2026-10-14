@@ -13,6 +13,7 @@ return {
   { import = "lazyvim.plugins.extras.lang.yaml" }, -- K8s/Actions
   { import = "lazyvim.plugins.extras.formatting.prettier" },
   { import = "lazyvim.plugins.extras.linting.eslint" },
+  { import = "lazyvim.plugins.extras.ui.treesitter-context" }, -- VS Code sticky scroll
 
   -----------------------------------------------------------------------------
   -- 1b. DEBUG & TEST (DAP + neotest; adapters in lua/plugins/dap.lua etc.)
