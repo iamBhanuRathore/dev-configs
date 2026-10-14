@@ -127,6 +127,19 @@ return {
       opts.indent = vim.tbl_deep_extend("force", opts.indent or {}, { enable = true })
     end,
   },
+  {
+    -- Calm the sticky header during snacks.scroll animation: without
+    -- throttle it re-opens its floating window on every animation frame
+    -- (WinScrolled), which reads as flicker. throttle=true updates on
+    -- CursorHold instead, so it stays put while scrolling and settles
+    -- ~300ms after you stop (matches updatetime). multiline_threshold=1
+    -- keeps multi-line nodes from resizing the header mid-scroll.
+    "nvim-treesitter/nvim-treesitter-context",
+    opts = {
+      throttle = true,
+      multiline_threshold = 1,
+    },
+  },
 
   -----------------------------------------------------------------------------
   -- 5. MASON (Binary Dependencies)
